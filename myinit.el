@@ -281,6 +281,15 @@
 (setq ibuffer-expert t)
 ;; IBUFFER:1 ends here
 
+;; [[file:~/.emacs.d/myinit.org::*Company][Company:1]]
+(use-package company
+:ensure t
+:config
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 3)
+(global-company-mode t))
+;; Company:1 ends here
+
 ;; [[file:~/.emacs.d/myinit.org::*Go-mode][Go-mode:1]]
 (add-hook 'go-mode-hook (lambda ()
 (local-set-key (kbd \"M-.\") 'godef-jump)))
@@ -293,7 +302,13 @@
 (global-flycheck-mode t))
 ;; Flycheck:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Python3][Python3:1]]
-(setq python-shell-interpreter "ipython"
-python-sell-interpreter-args "-i")
-;; Python3:1 ends here
+;; [[file:~/.emacs.d/myinit.org::*Python][Python:1]]
+(setq py-python-command "python3")
+(setq python-shell-interpreter "python3")
+;; Python:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Evil%20mode][Evil mode:1]]
+(add-to-list 'load-path "~/.emacs.d/evil")
+(require 'evil)
+(evil-mode 1)
+;; Evil mode:1 ends here

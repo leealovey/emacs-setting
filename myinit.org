@@ -33,7 +33,7 @@
 (doom-modeline-init)
 (load-theme 'monokai-pro t)
 #+END_SRC
-* Ace windows for easy window switching 
+* Ace windows for easywindow switching 
 #+BEGIN_SRC emacs-lisp
 (use-package ace-window
 :ensure t
@@ -330,7 +330,7 @@
   (setq ibuffer-expert t)
 
 #+END_SRC
-* Auto-Complete
+* Auto-Completea
 #+BEGIN_SRC emacs-lisp :tangle no
 (use-package auto-complete
 :ensure t
@@ -339,6 +339,15 @@
 (ac-config-default)
 (global-auto-complete-mode t)
 ))
+#+END_SRC
+* Company
+#+BEGIN_SRC emacs-lisp
+(use-package company
+:ensure t
+:config
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 3)
+(global-company-mode t))
 #+END_SRC
 * Go-mode
 #+BEGIN_SRC emacs-lisp
@@ -352,8 +361,19 @@
 :init
 (global-flycheck-mode t))
 #+END_SRC
-* Python3
+* Python
 #+BEGIN_SRC emacs-lisp
-(setq python-shell-interpreter "ipython"
-python-sell-interpreter-args "-i")
+(setq py-python-command "python3")
+(setq python-shell-interpreter "python3")
+#+END_SRC
+
+#+RESULTS:
+: t
+
+* Evil mode
+#+BEGIN_SRC emacs-lisp
+
+(add-to-list 'load-path "~/.emacs.d/evil")
+(require 'evil)
+(evil-mode 1)
 #+END_SRC
