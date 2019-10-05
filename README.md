@@ -20,3 +20,5 @@
 ## Auto-Complete
 ## Go-mode
 ## Python
+## Typescript
+## Rust
