@@ -30,7 +30,7 @@
 (load-theme 'monokai-pro t)
 ;; Themes and modeline:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Ace%20windows%20for%20easy%20window%20switching][Ace windows for easy window switching:1]]
+;; [[file:~/.emacs.d/myinit.org::*Ace%20windows%20for%20easywindow%20switching][Ace windows for easywindow switching:1]]
 (use-package ace-window
 :ensure t
 :init
@@ -42,7 +42,7 @@
 '(aw-leading-char-face
 ((t (:inherit ace-jump-face-foreground :height 3.0)))))
 ))
-;; Ace windows for easy window switching:1 ends here
+;; Ace windows for easywindow switching:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Org%20mode][Org mode:1]]
 (use-package org 
@@ -292,7 +292,9 @@
 
 ;; [[file:~/.emacs.d/myinit.org::*Go-mode][Go-mode:1]]
 (add-hook 'go-mode-hook (lambda ()
-(local-set-key (kbd \"M-.\") 'godef-jump)))
+(add-hook 'before-save-hook 'gofmt-before-save)
+(setq tab-width 4)
+(setq indent-tabs-mode 1)))
 ;; Go-mode:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Flycheck][Flycheck:1]]
@@ -307,8 +309,49 @@
 (setq python-shell-interpreter "python3")
 ;; Python:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Evil%20mode][Evil mode:1]]
-(add-to-list 'load-path "~/.emacs.d/evil")
-(require 'evil)
-(evil-mode 1)
-;; Evil mode:1 ends here
+;; [[file:~/.emacs.d/myinit.org::*Python][Python:2]]
+;; Preset `nlinum-format' for minimum width.
+(defun my-nlinum-mode-hook ()
+  (when nlinum-mode
+    (setq-local nlinum-format
+                (concat "%" (number-to-string
+                             ;; Guesstimate number of buffer lines.
+                             (ceiling (log (max 1 (/ (buffer-size) 80)) 10)))
+                        "d"))))
+(add-hook 'nlinum-mode-hook #'my-nlinum-mode-hook)
+;; Python:2 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Linum][Linum:1]]
+(require 'linum)
+(setq linum-format
+      (lambda (line)
+        (propertize (number-to-string (1- line)) 'face 'linum)))
+;; Linum:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*TypeScript][TypeScript:1]]
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+;; TypeScript:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Rust][Rust:1]]
+(add-to-list 'load-path "./elpa/rust-mode-20190927.2329")
+(autoload 'rust-mode "rust-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+;; Rust:1 ends here

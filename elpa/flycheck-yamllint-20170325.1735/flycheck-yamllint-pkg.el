@@ -1,0 +1,2 @@
+;;; -*- no-byte-compile: t -*-
+(define-package "flycheck-yamllint" "20170325.1735" "Flycheck integration for YAMLLint" '((flycheck "30")) :commit "c2b273d84f15bd03464d6722391e595d7c179a5c" :keywords '("convenience" "languages" "tools") :authors '(("Krzysztof Magosa" . "krzysztof@magosa.pl")) :maintainer '("Krzysztof Magosa" . "krzysztof@magosa.pl") :url "https://github.com/krzysztof-magosa/flycheck-yamllint")
