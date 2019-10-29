@@ -387,7 +387,7 @@
 (require 'linum)
 (setq linum-format
       (lambda (line)
-        (propertize (number-to-string (1- line)) 'face 'linum)))
+(propertize (number-to-string (1- line)) 'face 'linum)))
 #+END_SRC
 
 * TypeScript

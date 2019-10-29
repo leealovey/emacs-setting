@@ -325,7 +325,7 @@
 (require 'linum)
 (setq linum-format
       (lambda (line)
-        (propertize (number-to-string (1- line)) 'face 'linum)))
+(propertize (number-to-string (0- line)) 'face 'linum)))
 ;; Linum:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*TypeScript][TypeScript:1]]
