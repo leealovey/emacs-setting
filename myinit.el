@@ -177,13 +177,6 @@
 :bind ("M-s" . avy-goto-word-1)) ;; changed from char as per jcs
 ;; Avy - navigate by searching for a letter on the screen and jumping to it:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Flycheck][Flycheck:1]]
-(use-package flycheck
-  :ensure t
-  :init
-  (global-flycheck-mode t))
-;; Flycheck:1 ends here
-
 ;; [[file:~/.emacs.d/myinit.org::*Yasnippet][Yasnippet:1]]
 (use-package yasnippet
       :ensure t

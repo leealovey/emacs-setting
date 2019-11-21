@@ -200,16 +200,6 @@
   :ensure t
   :bind ("M-s" . avy-goto-word-1)) ;; changed from char as per jcs
   #+END_SRC
-
-* Flycheck
-  #+BEGIN_SRC emacs-lisp
-    (use-package flycheck
-      :ensure t
-      :init
-      (global-flycheck-mode t))
-
-  #+END_SRC
-
 * Yasnippet
   #+BEGIN_SRC emacs-lisp
     (use-package yasnippet
