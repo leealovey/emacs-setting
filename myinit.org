@@ -374,10 +374,6 @@
 #+END_SRC
 * Linum
 #+BEGIN_SRC emacs-lisp
-(require 'linum)
-(setq linum-format
-      (lambda (line)
-        (propertize (number-to-string (1- line)) 'face 'linum)))
 #+END_SRC
 
 * TypeScript
