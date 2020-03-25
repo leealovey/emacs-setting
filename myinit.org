@@ -276,3 +276,59 @@ See more Swiper: https://github.com/abo-abo/swiper
     ))
 
 #+END_SRC
+
+* Better shell
+This package simplifies shell management and sudo access 
+by providing the following commands
+See more: https://github.com/killdash9/better-shell
+#+BEGIN_SRC emacs-lisp
+
+(use-package better-shell
+:ensure t
+:bind (("C-c s" . better-shell-shell) 
+       ("C-c r" . better-shell-remote-open)))
+
+#+END_SRC
+
+* Origami
+A text folding minor mode for emacs
+See more: https://github.com/gregsexton/origami.el
+#+BEGIN_SRC emacs-lisp
+
+(use-package origami
+:ensure t
+:bind (("C-c o" . origami-mode)) 
+)
+
+#+END_SRC
+
+* Linum
+Set line number
+#+BEGIN_SRC emacs-lisp
+
+(use-package linum
+:ensure t
+:config
+:bind (("C-c l" . linum-mode))
+)
+
+#+END_SRC
+
+* Goto
+Use goto-line-preview and goto chg
+See more:
+goto-line-preview: https://github.com/jcs-elpa/goto-line-preview
+goto-chg: https://www.emacswiki.org/emacs/GotoChg
+#+BEGIN_SRC emacs-lisp
+
+(use-package goto-chg
+:ensure t
+:bind (("C-c g c" .  goto-last-change)
+       ("C-c g r" . goto-last-chanage-reverse)))
+
+(use-package goto-line-preview
+:ensure t
+:bind (("C-c g p". goto-line-preview)))
+
+#+END_SRC
+

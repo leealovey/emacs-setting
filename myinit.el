@@ -234,3 +234,36 @@
     (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
     ))
 ;; Swiper/Ivy/Counsel:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Better%20shell][Better shell:1]]
+(use-package better-shell
+:ensure t
+:bind (("C-c s" . better-shell-shell) 
+       ("C-c r" . better-shell-remote-open)))
+;; Better shell:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Origami][Origami:1]]
+(use-package origami
+:ensure t
+:bind (("C-c o" . origami-mode)) 
+)
+;; Origami:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Nlinum][Nlinum:1]]
+(use-package linum
+:ensure t
+:config
+:bind (("C-c l" . linum-mode))
+)
+;; Nlinum:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Goto][Goto:1]]
+(use-package goto-chg
+:ensure t
+:bind (("C-c g c" .  goto-last-change)
+       ("C-c g r" . goto-last-chanage-reverse)))
+
+(use-package goto-line-preview
+:ensure t
+:bind (("C-c g p". goto-line-preview)))
+;; Goto:1 ends here
