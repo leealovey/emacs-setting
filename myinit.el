@@ -2,7 +2,14 @@
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 ;; Repos:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Themes%20and%20modeline][Themes and modeline:1]]
+;; [[file:~/.emacs.d/myinit.org::*Interface%20tweaks][Interface tweaks:1]]
+(setq inhibit-startup-message t)
+(tool-bar-mode -1)
+(fset 'yes-or-no-p 'y-or-n-p)
+(global-set-key (kbd "<f5>") 'revert-buffer)
+;; Interface tweaks:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Themes%20and%20Modeline][Themes and  Modeline:1]]
 (use-package color-theme-modern
 :ensure t)
 (use-package doom-themes
@@ -27,7 +34,7 @@
 
 ;; corrects (and improves) org-mode's native fontification
 (doom-themes-org-config)
-;; Themes and modeline:1 ends here
+;; Themes and  Modeline:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Org-mode][Org-mode:1]]
 (use-package org
@@ -249,13 +256,13 @@
 )
 ;; Origami:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Nlinum][Nlinum:1]]
+;; [[file:~/.emacs.d/myinit.org::*Linum][Linum:1]]
 (use-package linum
 :ensure t
 :config
 :bind (("C-c l" . linum-mode))
 )
-;; Nlinum:1 ends here
+;; Linum:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Goto][Goto:1]]
 (use-package goto-chg

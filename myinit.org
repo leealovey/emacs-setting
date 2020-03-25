@@ -9,8 +9,19 @@ Add package website to list
 
 #+END_SRC
 
-* Themes and modeline
-Config editor themes, see more https://github.com/hlissner/emacs-doom-themes
+* Interface tweaks
+ Modify interface
+#+BEGIN_SRC emacs-lisp
+
+(setq inhibit-startup-message t)
+(tool-bar-mode -1)
+(fset 'yes-or-no-p 'y-or-n-p)
+(global-set-key (kbd "<f5>") 'revert-buffer)
+
+#+END_SRC
+
+* Themes and  Modeline 
+Editor themes, see more https://github.com/hlissner/emacs-doom-themes
 #+BEGIN_SRC emacs-lisp
 
 (use-package color-theme-modern
