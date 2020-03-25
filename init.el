@@ -5,7 +5,7 @@
 
 (package-initialize)
 ;; always show line number (first-line-number is 1)
-(global-linum-mode 1)
+;; (global-linum-mode 1)
 
 ;; Bootstrap `use-package`
 (unless
