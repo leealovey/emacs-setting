@@ -1,423 +1,70 @@
-#+STARTUP: overview 
+#+STARTUP: overview
 #+PROPERTY: header-args :comments yes :results silent
-* repos
+
+* repos 
+Add package website to list
 #+BEGIN_SRC emacs-lisp
+
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 
 #+END_SRC
-* interface tweaks
-#+BEGIN_SRC emacs-lisp
-(setq inhibit-startup-message t)
-(tool-bar-mode -1)
-(fset 'yes-or-no-p 'y-or-n-p)
-(global-set-key (kbd "<f5>") 'revert-buffer)
-#+END_SRC
-* which key
-#+BEGIN_SRC emacs-lisp
-(use-package which-key
-:ensure t
-:config 
-(which-key-mode))
-#+END_SRC
+
 * Themes and modeline
+Config editor themes, see more https://github.com/hlissner/emacs-doom-themes
 #+BEGIN_SRC emacs-lisp
+
 (use-package color-theme-modern
-:ensure t)
-(use-package monokai-pro-theme
 :ensure t)
 (use-package doom-themes
 :ensure t)
 (use-package doom-modeline
 :ensure t)
+
 (require 'doom-modeline)
 (doom-modeline-init)
-(load-theme 'monokai-pro t)
+
+(load-theme 'doom-monokai-classic  t)
+
+;; Enable flashing mode-line on errors
+(doom-themes-visual-bell-config)
+
+;; Enable custom neotree (all-the-icons must be installed!)
+(doom-themes-neotree-config)
+
+;; or for treemacs users
+(setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
+(doom-themes-treemacs-config)
+
+;; corrects (and improves) org-mode's native fontification
+(doom-themes-org-config)
+
 #+END_SRC
-* Ace windows for easywindow switching 
+
+* Org-mode
+Config org-mode, see more https://orgmode.org/
 #+BEGIN_SRC emacs-lisp
-(use-package ace-window
+
+(use-package org
 :ensure t
-:init
-(progn
-(setq aw-scope 'global)
-(global-set-key (kbd "C-x O") 'other-frame)
-(global-set-key [remap other-window] 'ace-window)
-(custom-set-faces
-'(aw-leading-char-face
-((t (:inherit ace-jump-face-foreground :height 3.0)))))
-))
-#+END_SRC
+:pin org)
 
-#+RESULTS:
-
-* Org mode
-
-
-  Org bullets makes things look pretty
-  #+BEGIN_SRC emacs-lisp
-
-    (use-package org 
-      :ensure t
-      :pin org)
-
-    (setenv "BROWSER" "chromium-browser")
-    (use-package org-bullets
-      :ensure t
-      :config
-      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-    (custom-set-variables
-     '(org-directory "~/Sync/orgfiles")
-     '(org-default-notes-file (concat org-directory "/notes.org"))
-     '(org-export-html-postamble nil)
-     '(org-hide-leading-stars t)
-     '(org-startup-folded (quote overview))
-     '(org-startup-indented t)
-     '(org-confirm-babel-evaluate nil)
-     '(org-src-fontify-natively t)
-     )
-
-    (setq org-file-apps
-          (append '(
-                    ("\\.pdf\\'" . "evince %s")
-                    ("\\.x?html?\\'" . "/usr/bin/chromium-browser %s")
-                    ) org-file-apps ))
-
-    (global-set-key "\C-ca" 'org-agenda)
-    (setq org-agenda-start-on-weekday nil)
-    (setq org-agenda-custom-commands
-          '(("c" "Simple agenda view"
-             ((agenda "")
-              (alltodo "")))))
-
-    (global-set-key (kbd "C-c c") 'org-capture)
-
-    (setq org-agenda-files (list "~/Sync/orgfiles/gcal.org"
-                                 "~/Sync/orgfiles/soe-cal.org"
-                                 "~/Sync/orgfiles/i.org"
-                                 "~/Sync/orgfiles/schedule.org"))
-    (setq org-capture-templates
-          '(("a" "Appointment" entry (file  "~/Sync/orgfiles/gcal.org" )
-             "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
-            ("l" "Link" entry (file+headline "~/Sync/orgfiles/links.org" "Links")
-             "* %? %^L %^g \n%T" :prepend t)
-            ("b" "Blog idea" entry (file+headline "~/Sync/orgfiles/i.org" "Blog Topics:")
-             "* %?\n%T" :prepend t)
-            ("t" "To Do Item" entry (file+headline "~/Sync/orgfiles/i.org" "To Do and Notes")
-             "* TODO %?\n%u" :prepend t)
-            ("m" "Mail To Do" entry (file+headline "~/Sync/orgfiles/i.org" "To Do and Notes")
-             "* TODO %a\n %?" :prepend t)
-            ("g" "GMail To Do" entry (file+headline "~/Sync/orgfiles/i.org" "To Do and Notes")
-             "* TODO %^L\n %?" :prepend t)
-            ("n" "Note" entry (file+headline "~/Sync/orgfiles/i.org" "Notes")
-             "* %u %? " :prepend t)
-            ))
-  
-
-    (defadvice org-capture-finalize 
-        (after delete-capture-frame activate)  
-      "Advise capture-finalize to close the frame"  
-      (if (equal "capture" (frame-parameter nil 'name))  
-          (delete-frame)))
-
-    (defadvice org-capture-destroy 
-        (after delete-capture-frame activate)  
-      "Advise capture-destroy to close the frame"  
-      (if (equal "capture" (frame-parameter nil 'name))  
-          (delete-frame)))  
-
-    (use-package noflet
-      :ensure t )
-    (defun make-capture-frame ()
-      "Create a new frame and run org-capture."
-      (interactive)
-      (make-frame '((name . "capture")))
-      (select-frame-by-name "capture")
-      (delete-other-windows)
-      (noflet ((switch-to-buffer-other-window (buf) (switch-to-buffer buf)))
-        (org-capture)))
-;; (require 'ox-beamer)
-;; for inserting inactive dates
-    (define-key org-mode-map (kbd "C-c >") (lambda () (interactive (org-time-stamp-inactive))))
-
-    (use-package htmlize :ensure t)
-
-    (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
-
-  #+END_SRC
-
-  #+RESULTS:
-  : make-capture-frame
-
-* Swiper / Ivy / Counsel
-  Swiper gives us a really efficient incremental search with regular expressions
-  and Ivy / Counsel replace a lot of ido or helms completion functionality
-  #+BEGIN_SRC emacs-lisp
-  
-
-
-
-   (use-package counsel
-:ensure t
-  :bind
-  (("M-y" . counsel-yank-pop)
-   :map ivy-minibuffer-map
-   ("M-y" . ivy-next-line)))
-
-
-
-
-  (use-package ivy
-  :ensure t
-  :diminish (ivy-mode)
-  :bind (("C-x b" . ivy-switch-buffer))
-  :config
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "%d/%d ")
-  (setq ivy-display-style 'fancy))
-
-
-  (use-package swiper
-  :ensure t
-  :bind (("C-s" . swiper-isearch)
-	 ("C-r" . swiper-isearch)
-	 ("C-c C-r" . ivy-resume)
-	 ("M-x" . counsel-M-x)
-	 ("C-x C-f" . counsel-find-file))
-  :config
-  (progn
-    (ivy-mode 1)
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-display-style 'fancy)
-    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
-    ))
-  #+END_SRC
-
-* Avy - navigate by searching for a letter on the screen and jumping to it
-  See https://github.com/abo-abo/avy for more info
-  #+BEGIN_SRC emacs-lisp
-  (use-package avy
-  :ensure t
-  :bind ("M-s" . avy-goto-word-1)) ;; changed from char as per jcs
-  #+END_SRC
-* Yasnippet
-  #+BEGIN_SRC emacs-lisp
-    (use-package yasnippet
-      :ensure t
-      :init
-        (yas-global-mode 1))
-
-;    (use-package yasnippet-snippets
-;      :ensure t)
-  #+END_SRC
-
-  #+RESULTS:
-
-* Undo Tree
-  #+BEGIN_SRC emacs-lisp
-    (use-package undo-tree
-      :ensure t
-      :init
-      (global-undo-tree-mode))
-  #+END_SRC
-* Misc packages
-  #+BEGIN_SRC emacs-lisp
-
-  ; Highlights the current cursor line
-  (global-hl-line-mode t)
-  
-  ; flashes the cursor's line when you scroll
-  (use-package beacon
-  :ensure t
-  :config
-  (beacon-mode 1)
-  ; (setq beacon-color "#666600")
-  )
-  
-  ; deletes all the whitespace when you hit backspace or delete
-  (use-package hungry-delete
-  :ensure t
-  :config
-  (global-hungry-delete-mode))
-  
-
-  (use-package multiple-cursors
-  :ensure t)
-
-  ; expand the marked region in semantic increments (negative prefix to reduce region)
-  (use-package expand-region
-  :ensure t
-  :config 
-  (global-set-key (kbd "C-=") 'er/expand-region))
-
-(setq save-interprogram-paste-before-kill t)
-
-
-(global-auto-revert-mode 1) ;; you might not want this
-(setq auto-revert-verbose nil) ;; or this
-(global-set-key (kbd "<f5>") 'revert-buffer)
-(global-set-key (kbd "<f6>") 'revert-buffer)
-
-
-  
-  #+END_SRC
-
-* Better Shell
-#+BEGIN_SRC emacs-lisp :tangle no
-  (use-package better-shell
-      :ensure t
-      :bind (("C-\"" . better-shell-shell)
-             ("C-:" . better-shell-remote-open)))
-#+END_SRC
-
-#+RESULTS:
-: better-shell-remote-open
-
-* Origami folding
-#+BEGIN_SRC emacs-lisp
-(use-package origami
-:ensure t)
-#+END_SRC
-
-#+RESULTS:
-
-* IBUFFER
-#+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-x C-b") 'ibuffer)
-  (setq ibuffer-saved-filter-groups
-        (quote (("default"
-                 ("dired" (mode . dired-mode))
-                 ("org" (name . "^.*org$"))
-                 ("magit" (mode . magit-mode))
-                 ("IRC" (or (mode . circe-channel-mode) (mode . circe-server-mode)))
-                 ("web" (or (mode . web-mode) (mode . js2-mode)))
-                 ("shell" (or (mode . eshell-mode) (mode . shell-mode)))
-                 ("mu4e" (or
-
-                          (mode . mu4e-compose-mode)
-                          (name . "\*mu4e\*")
-                          ))
-                 ("programming" (or
-                                 (mode . clojure-mode)
-                                 (mode . clojurescript-mode)
-                                 (mode . python-mode)
-                                 (mode . c++-mode)))
-                 ("emacs" (or
-                           (name . "^\\*scratch\\*$")
-                           (name . "^\\*Messages\\*$")))
-                 ))))
-  (add-hook 'ibuffer-mode-hook
-            (lambda ()
-              (ibuffer-auto-mode 1)
-              (ibuffer-switch-to-saved-filter-groups "default")))
-
-  ;; don't show these
-                                          ;(add-to-list 'ibuffer-never-show-predicates "zowie")
-  ;; Don't show filter groups if there are no buffers in that group
-  (setq ibuffer-show-empty-filter-groups nil)
-
-  ;; Don't ask for confirmation to delete marked buffers
-  (setq ibuffer-expert t)
-
-#+END_SRC
-* Auto-Completea
-#+BEGIN_SRC emacs-lisp :tangle no
-(use-package auto-complete
-:ensure t
-:init
-(progn
-(ac-config-default)
-(global-auto-complete-mode t)
-))
-#+END_SRC
-* Company
-#+BEGIN_SRC emacs-lisp
-(use-package company
+;; this config for linux
+;; (setenv "BROWSER" "chromium-browser")
+(use-package org-bullets
 :ensure t
 :config
-(setq company-idle-delay 0)
-(setq company-minimum-prefix-length 3)
-(global-company-mode t))
-#+END_SRC
-* Go-mode
-#+BEGIN_SRC emacs-lisp
-(add-hook 'go-mode-hook (lambda ()
-(add-hook 'before-save-hook 'gofmt-before-save)
-(setq tab-width 4)
-(setq indent-tabs-mode 1)))
-#+END_SRC
-* Flycheck
-#+BEGIN_SRC emacs-lisp
-(use-package flycheck
-:ensure t
-:init
-(global-flycheck-mode t))
-#+END_SRC
-* Python
-#+BEGIN_SRC emacs-lisp
-(setq py-python-command "python3")
-(setq python-shell-interpreter "python3")
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+;; this config for linux
+;; (setq org-file-apps (append '(
+;; ("\\.pdf\\'" . "evince %s")
+;; ("\\.x?html?\\'" . "/usr/bin/chromium-browser %s")
+;; ) org-file-apps ))
+
+;; this config for macOS
+(setq org-file-apps (append '(
+("\\.pdf\\'" . "open %s")
+) org-file-apps ))
+
 #+END_SRC
 
-#+RESULTS:
-: t
-#+BEGIN_SRC emacs-lisp
-;; Preset `nlinum-format' for minimum width.
-(defun my-nlinum-mode-hook ()
-  (when nlinum-mode
-    (setq-local nlinum-format
-                (concat "%" (number-to-string
-                             ;; Guesstimate number of buffer lines.
-                             (ceiling (log (max 1 (/ (buffer-size) 80)) 10)))
-                        "d"))))
-(add-hook 'nlinum-mode-hook #'my-nlinum-mode-hook)
-#+END_SRC
-* Linum
-#+BEGIN_SRC emacs-lisp
-#+END_SRC
-
-* TypeScript
-#+BEGIN_SRC emacs-lisp
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  (company-mode +1))
-
-;; aligns annotation to the right hand side
-(setq company-tooltip-align-annotations t)
-
-;; formats the buffer before saving
-(add-hook 'before-save-hook 'tide-format-before-save)
-
-(add-hook 'typescript-mode-hook #'setup-tide-mode)
-#+END_SRC
-* Rust
-#+BEGIN_SRC emacs-lisp
-(add-to-list 'load-path "./elpa/rust-mode-20190927.2329")
-(autoload 'rust-mode "rust-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-#+END_SRC
-* PHP
-#+BEGIN_SRC emacs-lisp
-(add-hook 'php-mode-hook 'my-php-mode-stuff)
-
-(defun my-php-mode-stuff ()
-  (local-set-key (kbd "<f1>") 'my-php-symbol-lookup))
-
-
-(defun my-php-symbol-lookup ()
-  (interactive)
-  (let ((symbol (symbol-at-point)))
-    (if (not symbol)
-        (message "No symbol at point.")
-
-      (browse-url (concat "http://php.net/manual-lookup.php?pattern="
-                          (symbol-name symbol))))))
-#+END_SRC
