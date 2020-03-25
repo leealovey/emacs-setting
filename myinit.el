@@ -140,15 +140,97 @@
   :config (treemacs-set-scope-type 'Perspectives))
 ;; Treemacs:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*UndoTree][UndoTree:1]]
+;; [[file:~/.emacs.d/myinit.org::*Undo%20tree][Undo tree:1]]
 (use-package undo-tree
-:ensure t
-:init
-(global-undo-tree-mode 1)
-(global-set-key (kbd "C-z") 'undo)
+  :ensure t
+  :init
+  (global-undo-tree-mode 1)
+  (global-set-key (kbd "C-z") 'undo)
 
-(defalias 'redo 'undo-tree-redo)
+  (defalias 'redo 'undo-tree-redo)
 
-(global-set-key (kbd "C-S-z") 'redo)
+   (global-set-key (kbd "C-x r r") 'redo)
 )
-;; UndoTree:1 ends here
+;; Undo tree:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Ace%20windows][Ace windows:1]]
+(use-package ace-window
+  :ensure t
+  :init 
+  (progn 
+    (setq aw-scope 'frame)
+    (setq aw-background nil)
+    (global-set-key (kbd "M-o") 'ace-window)
+    (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  )
+)
+;; Ace windows:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Which%20key][Which key:1]]
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+;; Which key:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Ibuffer][Ibuffer:1]]
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+(setq ibuffer-saved-filter-groups
+  (quote (("defullt"
+    ("dired" (mode . dired-mode))
+    ("org" (mode . "^.*org$"))
+    ("shell" (or (mode . eshell-mode) (mode . shell-mode)))
+    ("programming" (or
+    (mode . c++-mode)))
+    ("emacs" (or
+      (mode . "^\\*scratch\\*$")
+      (mode . "^\\*Message\\*$")))
+))))
+
+(add-hook 'ibuffer-mode-hook
+  (lambda()
+    (ibuffer-auto-mode 1)
+    (ibuffer-switch-to-saved-filter-groups "default")))
+
+;; Don't show filter groups if there are no buffers in that group
+(setq ibuffer-show-empty-filter-groups nil)
+
+;; Don't ask for confirmation to delete marked buffers
+(setq ibuffer-expert t)
+;; Ibuffer:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Swiper/Ivy/Counsel][Swiper/Ivy/Counsel:1]]
+(use-package counsel
+  :ensure t
+  :bind
+  (("M-y" . counsel-yank-pop)
+  :map ivy-minibuffer-map
+  ("M-y" . ivy-next-line)))
+
+(use-package ivy
+  :ensure t
+  :diminish (ivy-mode)
+  :bind (("C-x b" . ivy-switch-buffer))
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "%d/%d ")
+  (setq ivy-display-style 'fancy))
+
+
+(use-package swiper
+  :ensure t
+  :bind (("C-s" . swiper-isearch)
+	 ("C-r" . swiper-isearch)
+	 ("C-c C-r" . ivy-resume)
+	 ("M-x" . counsel-M-x)
+	 ("C-x C-f" . counsel-find-file))
+  :config
+  (progn
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-display-style 'fancy)
+    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
+    ))
+;; Swiper/Ivy/Counsel:1 ends here
