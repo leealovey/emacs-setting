@@ -1,4 +1,9 @@
 elpa/
+
 auto-save-list/
+
 .cache/
-tansient/
+
+!tansient/
+
+recentf
