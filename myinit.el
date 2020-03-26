@@ -415,7 +415,7 @@ mode-enable))
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "pandoc"))
+  :init (setq markdown-command "multimarkdown"))
 ;; Markdown mode:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Auctex][Auctex:1]]

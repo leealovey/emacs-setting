@@ -530,6 +530,8 @@ Markdown plugin
 See more, https://github.com/defunkt/markdown-mode
 #+BEGIN_SRC emacs-lisp
 
+;; Should install pandoc first
+;; For mac, brew install pandoc
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)
