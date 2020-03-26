@@ -407,6 +407,7 @@ See more, https://github.com/joaotavora/yasnippet
 (use-package yasnippet
 :ensure t
 :init
+(bind-key "C-c y" 'yas-about)
 :config
 (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
 (yas-global-mode 1))
@@ -416,6 +417,47 @@ See more, https://github.com/joaotavora/yasnippet
 :ensure t)
 
 
+
+#+END_SRC
+
+* Elpy
+Python Plugin
+See more, https://elpy.readthedocs.io/en/latest/index.html
+#+BEGIN_SRC emacs-lisp
+
+(use-package elpy
+:ensure t
+:init
+(setq python-indent-guess-indent-offset-verbose nil)
+(setq python-shell-interpreter "python3.7"
+      python-shell-interpreter-args "-i")
+(setq elpy-rpc-python-command "python3")
+(elpy-enable))
+
+
+ 
+#+END_SRC
+
+* Go mode
+Golang plugin
+See more, https://github.com/dominikh/go-mode.el
+#+BEGIN_SRC emacs-lisp
+
+(use-package go-mode
+:ensure t)
+
+#+END_SRC
+
+* Magit 
+Git plugin
+See more, https://magit.vc/
+#+BEGIN_SRC emacs-lisp
+
+(use-package magit
+:ensure t
+:bind (
+("C-c m c" . magit-commit))
+)
 
 #+END_SRC
 

@@ -325,6 +325,7 @@ mode-enable))
 (use-package yasnippet
 :ensure t
 :init
+(bind-key "C-c y" 'yas-about)
 :config
 (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
 (yas-global-mode 1))
@@ -333,3 +334,27 @@ mode-enable))
 (use-package yasnippet-snippets
 :ensure t)
 ;; Yasnippet:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Elpy][Elpy:1]]
+(use-package elpy
+:ensure t
+:init
+(setq python-indent-guess-indent-offset-verbose nil)
+(setq python-shell-interpreter "python3.7"
+      python-shell-interpreter-args "-i")
+(setq elpy-rpc-python-command "python3")
+(elpy-enable))
+;; Elpy:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Go%20mode][Go mode:1]]
+(use-package go-mode
+:ensure t)
+;; Go mode:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Magit][Magit:1]]
+(use-package magit
+:ensure t
+:bind (
+("C-c m c" . magit-commit))
+)
+;; Magit:1 ends here
