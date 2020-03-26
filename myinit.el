@@ -274,3 +274,62 @@
 :ensure t
 :bind (("C-c g p". goto-line-preview)))
 ;; Goto:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Company][Company:1]]
+(use-package company
+:ensure t
+:config
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 3)
+(global-company-mode t))
+
+(use-package company-irony
+:ensure t)
+;; Company:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Flycheck][Flycheck:1]]
+(use-package flycheck
+:ensure t
+:init 
+:config
+;; Disable the error indicator on the fringe
+(setq flycheck-indication-mode nil)
+
+;; Disable automatic syntax check on new line
+(setq flycheck-syntax-automatically '(save 
+idle-change 
+mode-enable))
+
+;; Immediate syntax checking quite annoying. Slow it down a bit.
+(setq flycheck-idle-change-delay 2.0)
+
+;; Customize faces (Colors are copied from solarized definitions
+
+(set-face-attribute 'flycheck-warning nil
+:background "#b58900"
+:foreground "#262626"
+:underline nil)
+
+(set-face-attribute 'flycheck-error nil
+:background "dc322f"
+:foreground "#262626"
+:underline nil)
+
+(global-flycheck-mode t))
+
+(use-package flycheck-irony
+:ensure t)
+;; Flycheck:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Yasnippet][Yasnippet:1]]
+(use-package yasnippet
+:ensure t
+:init
+:config
+(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+(yas-global-mode 1))
+
+;; a collection of yasnippet snippets for many languages
+(use-package yasnippet-snippets
+:ensure t)
+;; Yasnippet:1 ends here

@@ -343,3 +343,79 @@ goto-chg: https://www.emacswiki.org/emacs/GotoChg
 
 #+END_SRC
 
+* Company
+Modular in-buffer completion framework for Emacs
+See more: http://company-mode.github.io/
+#+BEGIN_SRC emacs-lisp
+
+(use-package company
+:ensure t
+:config
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 3)
+(global-company-mode t))
+
+(use-package company-irony
+:ensure t)
+
+#+END_SRC
+
+* Flycheck
+A modern on-the-fly syntax checking extension
+See more, https://www.flycheck.org/en/latest/
+#+BEGIN_SRC emacs-lisp
+
+(use-package flycheck
+:ensure t
+:init 
+:config
+;; Disable the error indicator on the fringe
+(setq flycheck-indication-mode nil)
+
+;; Disable automatic syntax check on new line
+(setq flycheck-syntax-automatically '(save 
+idle-change 
+mode-enable))
+
+;; Immediate syntax checking quite annoying. Slow it down a bit.
+(setq flycheck-idle-change-delay 2.0)
+
+;; Customize faces (Colors are copied from solarized definitions
+
+(set-face-attribute 'flycheck-warning nil
+:background "#b58900"
+:foreground "#262626"
+:underline nil)
+
+(set-face-attribute 'flycheck-error nil
+:background "dc322f"
+:foreground "#262626"
+:underline nil)
+
+(global-flycheck-mode t))
+
+(use-package flycheck-irony
+:ensure t)
+
+#+END_SRC  
+
+* Yasnippet
+A template system
+See more, https://github.com/joaotavora/yasnippet
+#+BEGIN_SRC emacs-lisp
+
+(use-package yasnippet
+:ensure t
+:init
+:config
+(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+(yas-global-mode 1))
+
+;; a collection of yasnippet snippets for many languages
+(use-package yasnippet-snippets
+:ensure t)
+
+
+
+#+END_SRC
+
