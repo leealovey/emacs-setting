@@ -531,11 +531,12 @@ See more, https://github.com/defunkt/markdown-mode
 #+BEGIN_SRC emacs-lisp
 
 (use-package markdown-mode
-:ensure t
-:mode (("README\\.md\\'" . gfm-mode)
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
-:init (setq markdown-command "multimarkdown"))
+  :init (setq markdown-command "multimarkdown"))
 
 #+END_SRC
 
@@ -573,7 +574,7 @@ See more, https://github.com/Sarcasm/irony-mode
 
 #+END_SRC
 
-* Meghanada-Mode
+* Meghanada mode
 Java environment
 See more, https://github.com/mopemope/meghanada-emacs
 #+BEGIN_SRC emacs-lisp

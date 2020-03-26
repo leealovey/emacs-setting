@@ -410,11 +410,12 @@ mode-enable))
 
 ;; [[file:~/.emacs.d/myinit.org::*Markdown%20mode][Markdown mode:1]]
 (use-package markdown-mode
-:ensure t
-:mode (("README\\.md\\'" . gfm-mode)
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
-:init (setq markdown-command "multimarkdown"))
+  :init (setq markdown-command "multimarkdown"))
 ;; Markdown mode:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Auctex][Auctex:1]]
