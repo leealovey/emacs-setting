@@ -444,7 +444,10 @@ See more, https://github.com/dominikh/go-mode.el
 #+BEGIN_SRC emacs-lisp
 
 (use-package go-mode
-:ensure t)
+:ensure t
+:config
+(setq tab-width 4)
+)
 
 #+END_SRC
 
@@ -467,7 +470,9 @@ See more, https://github.com/rust-lang/rust-mode
 #+BEGIN_SRC emacs-lisp
 
 (use-package rust-mode
-:ensure t)
+:ensure t
+:config
+(setq tab-width 4))
 
 (use-package racer
 :ensure t)
@@ -493,7 +498,6 @@ See more, http://web-mode.org/
 :ensure t
 :config
 (progn
-
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -569,4 +573,46 @@ See more, https://github.com/Sarcasm/irony-mode
 
 #+END_SRC
 
-* Java
+* Meghanada-Mode
+Java environment
+See more, https://github.com/mopemope/meghanada-emacs
+#+BEGIN_SRC emacs-lisp
+
+(use-package meghanada
+:ensure t
+:config
+(progn
+  (add-hook 'java-mode-hook
+    (lambda ()
+      ;; meghanada-mode on
+      (meghanada-mode t)
+      ;; enable telemetry
+      (meghanada-telemetry-enable t)
+      (flycheck-mode +1)
+      (setq c-basic-offset 2)
+      ;; use code format
+      (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
+))
+
+#+END_SRC
+
+* Php 
+mode
+A powerful and flexible Emacs major mode for editing PHP scripts
+See more, https://github.com/emacs-php/php-mode
+#+BEGIN_SRC emacs-lisp
+
+(use-package php-mode
+:ensure t
+:config
+(progn 
+  (setq tab-width 4)
+  (add-hook 'php-mode-hook 'php-enable-default-coding-style)
+  (add-hook 'php-mode-hook (lambda () (subword-mode 1)))
+  (with-eval-after-load 'php-mode
+    (define-key php-mode-map (kbd "C-c C--") 'php-current-class)
+    (define-key php-mode-map (kbd "C-c C-=") 'php-current-namespace))
+))
+
+#+END_SRC
+

@@ -348,7 +348,10 @@ mode-enable))
 
 ;; [[file:~/.emacs.d/myinit.org::*Go%20mode][Go mode:1]]
 (use-package go-mode
-:ensure t)
+:ensure t
+:config
+(setq tab-width 4)
+)
 ;; Go mode:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Magit][Magit:1]]
@@ -361,7 +364,9 @@ mode-enable))
 
 ;; [[file:~/.emacs.d/myinit.org::*Rust][Rust:1]]
 (use-package rust-mode
-:ensure t)
+:ensure t
+:config
+(setq tab-width 4))
 
 (use-package racer
 :ensure t)
@@ -377,7 +382,6 @@ mode-enable))
 :ensure t
 :config
 (progn
-
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -436,3 +440,35 @@ mode-enable))
 (use-package flycheck-irony
 :ensure t)
 ;; Irony:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Meghanada-Mode][Meghanada-Mode:1]]
+(use-package meghanada
+:ensure t
+:config
+(progn
+  (add-hook 'java-mode-hook
+    (lambda ()
+      ;; meghanada-mode on
+      (meghanada-mode t)
+      ;; enable telemetry
+      (meghanada-telemetry-enable t)
+      (flycheck-mode +1)
+      (setq c-basic-offset 2)
+      ;; use code format
+      (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
+))
+;; Meghanada-Mode:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Php][Php:1]]
+(use-package php-mode
+:ensure t
+:config
+(progn 
+  (setq tab-width 4)
+  (add-hook 'php-mode-hook 'php-enable-default-coding-style)
+  (add-hook 'php-mode-hook (lambda () (subword-mode 1)))
+  (with-eval-after-load 'php-mode
+    (define-key php-mode-map (kbd "C-c C--") 'php-current-class)
+    (define-key php-mode-map (kbd "C-c C-=") 'php-current-namespace))
+))
+;; Php:1 ends here
