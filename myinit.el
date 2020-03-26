@@ -415,7 +415,7 @@ mode-enable))
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
+  :init (setq markdown-command "pandoc"))
 ;; Markdown mode:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Auctex][Auctex:1]]
@@ -442,7 +442,7 @@ mode-enable))
 :ensure t)
 ;; Irony:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Meghanada-Mode][Meghanada-Mode:1]]
+;; [[file:~/.emacs.d/myinit.org::*Meghanada%20mode][Meghanada mode:1]]
 (use-package meghanada
 :ensure t
 :config
@@ -458,7 +458,7 @@ mode-enable))
       ;; use code format
       (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
 ))
-;; Meghanada-Mode:1 ends here
+;; Meghanada mode:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Php%20mode][Php mode:1]]
 (use-package php-mode
