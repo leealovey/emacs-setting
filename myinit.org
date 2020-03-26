@@ -137,6 +137,16 @@ A tree layout file explorer for emacs, see more https://github.com/Alexander-Mil
        (treemacs-git-mode 'deferred))
       (`(t . _)
        (treemacs-git-mode 'simple))))
+
+  (treemacs-create-theme "Default"
+  :icon-directory (f-join treemacs-dir "icons/default")
+  :config
+  (progn
+    (treemacs-create-icon :file "root.png"   :fallback ""            :extensions (root))
+    (treemacs-create-icon :file "emacs.png"  :fallback "🗏 "          :extensions ("el" "elc"))
+    (treemacs-create-icon :file "readme.png" :fallback "🗏 "          :extensions ("readme.md"))
+    (treemacs-create-icon :icon (all-the-icons-icon-for-file "yaml") :extensions ("yml" "yaml"))))
+
   :bind
   (:map global-map
         ("M-0"       . treemacs-select-window)
@@ -145,6 +155,7 @@ A tree layout file explorer for emacs, see more https://github.com/Alexander-Mil
         ("C-x t B"   . treemacs-bookmark)
         ("C-x t C-t" . treemacs-find-file)
         ("C-x t M-t" . treemacs-find-tag)))
+
 
 (use-package treemacs-evil
   :after treemacs evil
@@ -167,6 +178,11 @@ A tree layout file explorer for emacs, see more https://github.com/Alexander-Mil
   :after treemacs persp-mode
   :ensure t
   :config (treemacs-set-scope-type 'Perspectives))
+
+(use-package hl-line
+  :ensure t
+  :config
+  (global-hl-line-mode t))
 
 #+END_SRC
 

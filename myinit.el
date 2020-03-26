@@ -115,6 +115,16 @@
        (treemacs-git-mode 'deferred))
       (`(t . _)
        (treemacs-git-mode 'simple))))
+
+  (treemacs-create-theme "Default"
+  :icon-directory (f-join treemacs-dir "icons/default")
+  :config
+  (progn
+    (treemacs-create-icon :file "root.png"   :fallback ""            :extensions (root))
+    (treemacs-create-icon :file "emacs.png"  :fallback "🗏 "          :extensions ("el" "elc"))
+    (treemacs-create-icon :file "readme.png" :fallback "🗏 "          :extensions ("readme.md"))
+    (treemacs-create-icon :icon (all-the-icons-icon-for-file "yaml") :extensions ("yml" "yaml"))))
+
   :bind
   (:map global-map
         ("M-0"       . treemacs-select-window)
@@ -123,6 +133,7 @@
         ("C-x t B"   . treemacs-bookmark)
         ("C-x t C-t" . treemacs-find-file)
         ("C-x t M-t" . treemacs-find-tag)))
+
 
 (use-package treemacs-evil
   :after treemacs evil
@@ -145,6 +156,11 @@
   :after treemacs persp-mode
   :ensure t
   :config (treemacs-set-scope-type 'Perspectives))
+
+(use-package hl-line
+  :ensure t
+  :config
+  (global-hl-line-mode t))
 ;; Treemacs:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Undo%20tree][Undo tree:1]]
@@ -409,13 +425,15 @@ mode-enable))
 ;; Web mode:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Markdown%20mode][Markdown mode:1]]
+;; Should install pandoc first
+;; For mac, brew install pandoc
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
+  :init (setq markdown-command "pandoc"))
 ;; Markdown mode:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Auctex][Auctex:1]]
