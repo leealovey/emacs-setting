@@ -459,7 +459,7 @@ mode-enable))
 ))
 ;; Meghanada-Mode:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Php][Php:1]]
+;; [[file:~/.emacs.d/myinit.org::*Php%20mode][Php mode:1]]
 (use-package php-mode
 :ensure t
 :config
@@ -471,4 +471,10 @@ mode-enable))
     (define-key php-mode-map (kbd "C-c C--") 'php-current-class)
     (define-key php-mode-map (kbd "C-c C-=") 'php-current-namespace))
 ))
-;; Php:1 ends here
+;; Php mode:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Docker][Docker:1]]
+(use-package docker
+:ensure t
+:bind ("C-c d" . docker))
+;; Docker:1 ends here

@@ -596,8 +596,7 @@ See more, https://github.com/mopemope/meghanada-emacs
 
 #+END_SRC
 
-* Php 
-mode
+* Php mode
 A powerful and flexible Emacs major mode for editing PHP scripts
 See more, https://github.com/emacs-php/php-mode
 #+BEGIN_SRC emacs-lisp
@@ -613,6 +612,17 @@ See more, https://github.com/emacs-php/php-mode
     (define-key php-mode-map (kbd "C-c C--") 'php-current-class)
     (define-key php-mode-map (kbd "C-c C-=") 'php-current-namespace))
 ))
+
+#+END_SRC
+
+* Docker
+Docker mode
+See more, https://github.com/Silex/docker.el
+#+BEGIN_SRC emacs-lisp
+
+(use-package docker
+:ensure t
+:bind ("C-c d" . docker))
 
 #+END_SRC
 
