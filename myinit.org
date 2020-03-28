@@ -460,10 +460,7 @@ See more, https://github.com/dominikh/go-mode.el
 #+BEGIN_SRC emacs-lisp
 
 (use-package go-mode
-:ensure t
-:config
-(setq tab-width 4)
-)
+:ensure t)
 
 #+END_SRC
 
