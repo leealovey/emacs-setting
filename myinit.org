@@ -324,8 +324,15 @@ See more: https://github.com/gregsexton/origami.el
 
 (use-package origami
 :ensure t
-:bind (("C-c o" . origami-mode)) 
-)
+:bind (
+  ("C-c o s" . origami-mode)
+  ("C-c o t" . origame-origami-toggle-node)
+  ("C-c o c" . origami-close-node)
+  ("C-c o o" . origami-open-node)
+  ("C-c o u" . origami-undo)
+  ("C-c o g" . origami-open-all-nodes)
+  ("C-c o r" . origami-close-all-nodes) 
+))
 
 #+END_SRC
 
@@ -642,5 +649,10 @@ See more, https://github.com/Silex/docker.el
 :ensure t
 :bind ("C-c d" . docker))
 
+(use-package dockerfile-mode
+:ensure t
+:config
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+)
 #+END_SRC
 
