@@ -479,8 +479,16 @@ See more, https://magit.vc/
 (use-package magit
 :ensure t
 :bind (
-("C-c m c" . magit-commit))
-)
+  ("C-c m c" . magit-commit)
+  ("C-c m p" . magit-push)
+  ("C-c m l" . magit-log)
+  ("C-c m n" . magit-clone)
+  ("C-c m b" . magit-branch-create)
+  ("C-c m d" . magit-branch-delete)
+  ("C-c m r" . magit-branch-reset)
+  ("C-c m o" . magit-checkout)
+  ("C-c m s" . magit-stash)
+))
 
 #+END_SRC
 
