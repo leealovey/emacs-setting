@@ -518,6 +518,7 @@ See more, https://magit.vc/
   ("C-c m r" . magit-branch-reset)
   ("C-c m o" . magit-checkout)
   ("C-c m s" . magit-stash)
+  ("C-c m g" . magit-status)
 ))
 
 #+END_SRC
