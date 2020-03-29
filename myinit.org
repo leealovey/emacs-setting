@@ -72,6 +72,41 @@ Config org-mode, see more https://orgmode.org/
 ;; ("\\.x?html?\\'" . "/usr/bin/chromium-browser %s")
 ;; ) org-file-apps ))`
 
+
+(setq org-agenda-files (list "~/Dropbox/Org/schedule.org"
+                             "~/.emacs.d/org/course.org"
+			     "~/.emacs.d/org/exercise.org"
+			     "~/.emacs.d/org/gtd.org"
+			     "~/.emacs.d/org/social.org"
+			     "~/.emacs.d/org/project.org"))
+
+;; Multiple keyword sets in one file
+(setq org-todo-keywords
+  '((sequence "TODO" "IN-PROGRESS" "WAIT" "|" "DONE")
+    (sequencee "REPORT" "BUG" "KNOWNCAUSE" "|" "FIXED")
+    (sequence "|" "CANCELED")))
+
+(setq org-todo-keyword-faces 
+  '(("TODO" . (:foreground "orange" :weight bold)) 
+    ("REPORT" . (:foreground "orange" :weight bold))
+    ("IN-PROGRESS" . "cyan")
+    ("BUG" . "cyan")
+    ("KNOWNCAUSE" . "cyan")
+    ("DONE" . "green")
+    ("FIXED" . "green")
+    ("CANCELED" . (:foreground "blue" :weight bold))))
+
+(setq org-tag-alist '((:startgroup . nil)
+                      ("@work" . ?w)
+		      ("@home" . ?h)
+		      ("@course" . ?c)
+		      ("@social" . ?s)
+		      (:endgroup . nil)
+		      ("laptop" . ?l)
+		      ("pc" . ?p)))
+
+
+
 #+END_SRC
 
 * Treemacs
